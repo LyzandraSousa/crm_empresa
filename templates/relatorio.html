@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Relatório Detalhado</h2>
+
+<form method="GET" action="/relatorio" style="margin-bottom:20px;">
+    <label>Filtrar por mês:</label>
+    <input type="month" name="mes" value="{{ mes }}">
+    <button type="submit">Filtrar</button>
+</form>
+
+<div class="card-container">
+    <div class="card">
+        <h3>Total de Leads</h3>
+        <p>{{ total }}</p>
+    </div>
+    <div class="card">
+        <h3>Fechados</h3>
+        <p>{{ fechados }}</p>
+    </div>
+    <div class="card">
+        <h3>Faturamento</h3>
+        <p>R$ {{ faturamento }}</p>
+    </div>
+    <div class="card">
+        <h3>Taxa de Conversão</h3>
+        <p>{{ taxa }}%</p>
+    </div>
+</div>
+
+<canvas id="graficoFaturamento" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var ctx = document.getElementById('graficoFaturamento').getContext('2d');
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Fechados', 'Não Fechados'],
+        datasets: [{
+            label: 'Leads',
+            data: [{{ fechados }}, {{ total - fechados }}],
+            backgroundColor: ['#28a745', '#dc3545']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } }
+    }
+});
+</script>
+
+<h3 style="margin-top:40px;">Clientes</h3>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Serviço</th>
+        <th>Fechou</th>
+        <th>Valor</th>
+        <th>Data</th>
+    </tr>
+    {% for c in clientes %}
+    <tr>
+        <td>{{ c[1] }}</td>
+        <td>{{ c[3] }}</td>
+        <td>{{ c[4] }}</td>
+        <td>{{ 'Sim' if c[6] == 1 else 'Não' }}</td>
+        <td>{{ c[8] }}</td>
+        <td>{{ c[7] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

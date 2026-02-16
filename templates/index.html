@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<form method="GET" class="filtro-mes">
+    <label>Filtrar por mês:</label>
+    <input type="month" name="mes">
+    <button class="btn">Filtrar</button>
+</form>
+
+<div class="card-container">
+    <div class="card">
+        <h3>Total de Leads</h3>
+        <p>{{ total }}</p>
+    </div>
+    <div class="card">
+        <h3>Fechados</h3>
+        <p>{{ fechados }}</p>
+    </div>
+    <div class="card">
+        <h3>Taxa de Conversão</h3>
+        <p>{{ taxa }}%</p>
+    </div>
+    <div class="card">
+        <h3>Faturamento</h3>
+        <p>R$ {{ faturamento }}</p>
+    </div>
+</div>
+{% endblock %}

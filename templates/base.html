@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CRM Empresa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header style="background:#2c3e50; color:white; padding:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+        <div style="max-width:1200px; margin:auto; display:flex; justify-content:space-between; align-items:center;">
+            <h1 style="margin:0;">CRM Empresa</h1>
+            {% if session.get('username') %}
+            <nav>
+                <a href="/dashboard" style="color:white; padding:5px 15px; text-decoration:none;">Dashboard</a>
+                <a href="/cadastrar" style="color:white; padding:5px 15px; text-decoration:none;">Cadastrar Cliente</a>
+                <a href="/listar" style="color:white; padding:5px 15px; text-decoration:none;">Listar Clientes</a>
+                {% if session.get('nivel') == 'admin' %}
+                <a href="/registrar" style="color:white; padding:5px 15px; text-decoration:none;">Registrar Usuário</a>
+                {% endif %}
+                <a href="/logout" style="color:white; padding:5px 15px; text-decoration:none;">Sair</a>
+            </nav>
+            {% endif %}
+        </div>
+    </header>
+
+    <main style="padding:30px; background:#f8f9fa; min-height:80vh;">
+        <div style="max-width:1200px; margin:auto;">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer style="text-align:center; padding:15px; background:#343a40; color:white;">
+        CRM Empresa - 2026
+    </footer>
+</body>
+</html>

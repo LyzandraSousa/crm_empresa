@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Gráfico de Fechamentos Mensais</h2>
+<canvas id="fechamentosChart"></canvas>
+
+<script>
+// Passando dados do Python para JS de forma segura
+const meses = {{ meses|tojson }};
+const valores = {{ valores|tojson }};
+
+const ctx = document.getElementById('fechamentosChart').getContext('2d');
+const fechamentosChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: meses,
+        datasets: [{
+            label: 'Fechamentos',
+            data: valores,
+            backgroundColor: '#2563eb'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { 
+            y: { 
+                beginAtZero: true 
+            } 
+        }
+    }
+});
+</script>
+{% endblock %}
